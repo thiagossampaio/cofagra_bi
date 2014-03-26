@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML>
+
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/paginas/templates/principal.xhtml">
+
+	<ui:param name="title" value="Cadastro de Métricas" />
+
+	<ui:define name="conteudo">
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="page-header">
+				  <h2>Cadastro de Métricas <small> Adicione gráficos ao Painel I </small></h2>
+				</div>
+			</div>
+		</div>
+		
+			<h:form id="formMetricas" styleClass="form-horizontal" prependId="false">
+			
+				<div class="form-group">
+				  <div class="col-sm-6">
+				    <label for="painel" class="col-sm-2- -control-label">Painel:</label>
+			    	<p:inputText styleClass="form-control" id="painel" value="#{Constantes.PAINEL_I}" disabled="true">
+			    	</p:inputText>
+				  </div>
+				  
+				  <div class="col-sm-6">
+				    <label for="tipo">Tipo:</label>
+			    	<p:inputText styleClass="form-control" id="tipo" value="#{Constantes.GRAFICO_TIPO_VELOCIMETRO}" disabled="true">
+			    	</p:inputText>
+				  </div>			
+				</div>
+				
+				<div class="form-group">
+				  <div class="col-sm-12">
+				    <label for="titulo">Titulo:</label>
+			    	<p:inputText styleClass="form-control" id="titulo" value="#{metricasControlador.entidade.titulo}">
+			    	</p:inputText>
+		    		<p:watermark for="titulo" value="Título"></p:watermark>
+			    	<p class="help-block">Escolha um título para o seu gráfico</p>
+				  </div>
+				</div>
+				
+				<div class="form-group">
+				
+				  <div class="col-sm-6">
+				    <label for="estagio">Estagios:</label>
+			    	<p:inputText styleClass="form-control" id="estagio" value="#{metricasControlador.entidade.estagios}" >
+			    	</p:inputText>
+		    		<p:watermark for="estagio" value="10;20;30;100"></p:watermark>
+		    		<p class="help-block">Delimite os valores para as cores do seu gráfico</p>
+				  </div>
+				  
+				  <div class="col-sm-6">
+				  	<p:colorPicker styleClass="hidden" />  
+				    <label for="cores">Cores:</label>
+			    	<p:inputText styleClass="form-control cores" id="cores" value="#{metricasControlador.entidade.cores}" disabled="false">
+			    	</p:inputText>
+			    	<span class="simple-color"></span>
+		    		<p:watermark for="cores" value="C2C2C2;FFFFFF;000000"></p:watermark>
+		    		<p class="help-block">Escolha uma cor em HEXA para cada limite acima escolhido</p>
+		    		<ul class="ul-cores" style="display: none;">
+		    		</ul>
+				  </div>
+				  	
+				</div>
+					  
+				<div class="form-group"> 
+				  <div class="col-sm-12">
+				    <label for="query">Query:</label>
+			    	<p:inputTextarea styleClass="form-control" id="query" value="#{metricasControlador.entidade.query}" rows="3"/>
+		    		<p:watermark for="query" value="SELECT * FROM TB_PESSOAS"></p:watermark>
+		    		<p class="help-block">A query sql válida da sua consulta. Obs.: Deve ser retornado apenas um valor numérico</p>
+				  </div>	
+ 			    </div>
+					  
+			    <hr></hr>
+			    
+				<div class="form-group">
+				  
+				  <div class="col-sm-4">
+				    <label for="label">Label:</label>
+				    	<p:inputText styleClass="form-control" id="label" value="#{metricasControlador.entidade.label}">
+				    	</p:inputText>
+			    		<p:watermark for="label" value="Km/h"></p:watermark>
+			    		<p class="help-block">O label explica melhor os valores do seu gráfico</p>
+				  </div>	
+				  			
+				  <div class="col-sm-4">
+				    <label for="style">Style:</label>
+			    	<p:inputText styleClass="form-control" id="style" value="#{metricasControlador.entidade.style}">
+			    	</p:inputText>
+		    		<p:watermark for="style" value="width:400px;height:250px;"></p:watermark>
+		    		<p class="help-block">Customize o gráfico com CSS</p>
+				  </div>	  
+				  
+				  <div class="col-sm-4">
+				    <label for="styleClass">Classe:</label>
+			    	<p:inputText styleClass="form-control" id="styleClass" value="#{metricasControlador.entidade.styleClass}">
+			    	</p:inputText>
+		    		<p:watermark for="styleClass" value="btn-info"></p:watermark>
+		    		<p class="help-block">Sete alguma classe CSS no gráfico</p>
+				  </div>	
+				  					  		  
+				</div>
+				
+				
+				<div class="form-group">
+				
+				  <div class="col-sm-3">
+				    <label for="labelHeightAdjust">Label Height Adjust:</label>
+			    	<p:inputText styleClass="form-control" id="labelHeightAdjust" value="#{metricasControlador.entidade.labelHeightAdjust}">
+			    	</p:inputText>
+		    		<p:watermark for="labelHeightAdjust" value="100"></p:watermark>
+		    		<p class="help-block">A altura dos labels acima</p>
+				  </div>
+				  					  
+				  <div class="col-sm-3">
+				    <label for="intervalOuterRadius" >Interval Outer Radius:</label>
+			    	<p:inputText styleClass="form-control" id="intervalOuterRadius" value="#{metricasControlador.entidade.intervalOuterRadius}">
+			    	</p:inputText>
+		    		<p:watermark for="intervalOuterRadius" value="100"></p:watermark>
+				  </div>
+				  	
+				  <div class="col-sm-2">
+				    <label for="min">Min:</label>
+			    	<p:inputText styleClass="form-control" id="min" value="#{metricasControlador.entidade.min}">
+			    	</p:inputText>
+		    		<p:watermark for="min" value="100"></p:watermark>
+				  </div>
+				  	
+				  <div class="col-sm-2">
+				    <label for="max" >Max:</label>
+			    	<p:inputText styleClass="form-control" id="max" value="#{metricasControlador.entidade.max}">
+			    	</p:inputText>
+		    		<p:watermark for="max" value="200"></p:watermark>
+				  </div>			
+				  
+				  <div class="col-sm-2">
+				    <label for="showTickLabels">Show Tick Labels:</label>
+			    	<p:selectBooleanCheckbox styleClass="checkbox" id="showTickLabels" value="#{metricasControlador.entidade.showTickLabels}" />
+				  </div>					  		  
+				</div>
+					  
+					  								  
+				  <div class="form-group">
+				    <div class="col-sm-3">
+				    	<p:commandButton styleClass="btn btn-primary" value="Salvar" update="@([id$=formMetricas])"  action="#{metricasControlador.salvar()}"></p:commandButton>
+				    	<p:spacer width="5"/>
+				    	<h:panelGroup rendered="#{not empty metricasControlador.entidade.id}">
+					    	<p:commandButton styleClass="btn btn-danger" value="Remover" update="@([id$=formMetricas])"  action="#{metricasControlador.remover(metricasControlador.entidade)}"></p:commandButton>
+					    	<p:spacer width="5"/>					    	
+				    	</h:panelGroup>
+				    	<p:commandButton styleClass="btn btn-default" value="Limpar" update="@([id$=formMetricas])"  action="#{metricasControlador.init()}"></p:commandButton>
+				    </div>
+				    
+				    <div class="col-sm-9">
+				    	<p:commandButton styleClass="btn btn-success pull-right" value="Validar" 
+				    	process="@([id$=formMetricas])"
+				    		update="@([id$=formMetricas])" action="#{metricasControlador.validar(false)}"/>
+				    	<p:spacer width="5"/>							    	
+				    </div>
+				  </div>
+					  
+				
+				<p:dialog
+					header="Teste da Métrica"
+					widgetVar="dialogMetrica"
+					modal="true">
+					
+					<p:meterGaugeChart id="graficoMetricaValidar" 
+					rendered="#{not empty metricasControlador.entidade.model}"
+					seriesColors="#{metricasControlador.entidade.cores}"
+					value="#{metricasControlador.entidade.model}"
+					style="width:400px;height:250px" 
+					title="#{metricasControlador.entidade.titulo}"
+					label="km/h"
+					/>
+					
+				</p:dialog>				
+				
+				<div class="row">
+					<div class="col-sm-12">
+					
+						<h:panelGroup id="panelGroupMetricas">
+							<p:dataTable value="#{metricasControlador.metricas}" 
+							styleClass="table table-hover text-center"
+							paginatorPosition="bottom"
+							emptyMessage="Nenhum item foi adicionado"
+							width="100%" paginator="true"
+							rowIndexVar="index"
+							rows="20"
+							var="m" rendered="#{not empty metricasControlador.metricas}">
+	
+								<p:column sortBy="#{m.titulo}" styleClass="text-center">
+									<f:facet name="header">
+										<h:outputText value="Titulo" />
+									</f:facet>
+									<h:outputText value="#{m.titulo}" styleClass="text-center" />
+								</p:column>
+								
+								<p:column sortBy="#{m.tipo}" styleClass="text-center">
+									<f:facet name="header">
+										<h:outputText value="Tipo" />
+									</f:facet>
+									<h:outputText value="#{m.tipo}" styleClass="text-center" />
+								</p:column>							
+	
+								<p:column sortBy="#{m.estagios}" styleClass="text-center">
+									<f:facet name="header">
+										<h:outputText value="Estagios" />
+									</f:facet>
+									<h:outputText value="#{m.estagios}" styleClass="text-center" />
+								</p:column>
+								
+								<p:column sortBy="#{m.cores}" styleClass="text-center">
+									<f:facet name="header">
+										<h:outputText value="Cores" />
+									</f:facet>
+									<h:outputText value="#{m.cores}" styleClass="text-center" />
+								</p:column>		
+								
+								<p:column styleClass="text-center">
+									<f:facet name="header">
+										<h:outputText value="Opções" />
+									</f:facet>
+									<p:commandLink process="@this" action="#{metricasControlador.setEntidade(m)}" oncomplete="color();" update="@([id$=formMetricas])">
+										<i class="glyphicon glyphicon-pencil"></i>
+									</p:commandLink>
+									<p:spacer width="5px"/>
+									<a onclick="removerMetrica#{index}.show();">
+										<i class="glyphicon glyphicon-remove"></i>
+									</a>									
+									<p:confirmDialog
+										message="Tem certeza que deseja remover essa métrica?"
+										header="Remover métrica" severity="alert"
+										widgetVar="removerMetrica#{index}">
+										<p:commandButton value="Sim"
+											action="#{metricasControlador.remover(m)}"
+											process="@this" update="@([id$=formMetricas])"
+											oncomplete="removerMetrica#{index}.hide()" styleClass="btn" />
+										<p:commandButton value="Não"
+											onclick="removerMetrica#{index}.hide()" type="button"
+											styleClass="btn" />
+									</p:confirmDialog>																				
+								</p:column>			
+								
+
+							</p:dataTable>
+						</h:panelGroup>
+					</div>
+				</div>
+			</h:form>
+		
+	</ui:define>
+
+</ui:composition>

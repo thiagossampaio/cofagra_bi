@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>painel_i</from-outcome>
+			<to-view-id>/paginas/paineis/painel_i.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>inicio</from-outcome>
+			<to-view-id>/paginas/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>metricas</from-outcome>
+			<to-view-id>/paginas/paineis/metricas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+
+	<render-kit>
+		<!-- Renderizando e customizando o componente <p:messages> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.MessagesRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtMessageRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <p:commandButton> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.CommandButtonRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeCommandButtonRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <p:inputText> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.InputTextRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeInputTextRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <p:inputMask> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.InputMaskRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeInputMaskRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <pe:inputNumber> -->
+		<renderer>
+			<component-family>org.primefaces.extensions.component</component-family>
+			<renderer-type>org.primefaces.extensions.component.InputNumberRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeInputNumberRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <pe:autocomplete> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.AutoCompleteRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeAutoCompleteRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <pe:wizard> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.WizardRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeWizardRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <pe:splibutton> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.SplitButtonRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtSpliButtonRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <p:tabView> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.TabViewRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeTabViewRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <p:calendar> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.CalendarRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeCalendarRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <p:breadcrumd> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.BreadCrumbRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimeBreadCrumbRenderer</renderer-class>
+		</renderer>
+		<!-- Renderizando e customizando o componente <p:picklist> -->
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.PickListRenderer</renderer-type>
+			<renderer-class>br.com.cofagra.bi.renders.ExtPrimePickListRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+		<resource-bundle>
+			<base-name>META-INF/mensagens</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+		</locale-config>
+	</application>
+</faces-config>

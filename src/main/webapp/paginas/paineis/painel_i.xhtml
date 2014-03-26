@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE HTML> 
+<html   
+		xmlns="http://www.w3c.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:p="http://primefaces.org/ui"  
+		xmlns:c="http://java.sun.com/jsp/jstl/core"
+		xmlns:pe="http://primefaces.org/ui/extensions"
+		xmlns:f="http://java.sun.com/jsf/core">
+		
+    <h:head>
+		
+			<f:facet name="first">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+				<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+				<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+				<title>COFAGRA Bi - Painel <ui:insert name="title"/></title>
+				<link rel="icon" href="#{facesContext.externalContext.request.contextPath}/recursos/imagens/favicon.ico" />
+			</f:facet>	        
+			
+			<!-- Custom BootStrap -->
+			<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/css/bootstrap.min.css"/>
+			<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/css/bootstrap-theme.min.css"/>
+			<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/css/custom_bootstrap.css"/>
+        
+			<!-- O carregamento desses scripts deve acontecer depois do carregamento dos JS do primeface -->
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/js/jquery.maskmoney.js" type="text/javascript"></script>
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/js/bootstrap.min.js" type="text/javascript"></script>
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/js/application.js" type="text/javascript"></script>
+		
+    </h:head>
+	    
+	<f:view contentType="text/html" locale="#{localeControlador.locale}">
+	
+	    <h:body>
+	    
+	    	<f:loadBundle basename="META-INF/mensagens" var="msg"/>
+		    	
+	    	<!-- Importando as constantes do sistema -->
+	    	<pe:importConstants className="br.com.cofagra.bi.util.Constantes" var="Constantes" />
+	    	
+			<!-- AjaxStatus Principal -->	    
+			<p:ajaxStatus id="ajaxStatus" oncomplete="ajaxStatusOnComplete();" onstart="ajaxStatusOnStart()" />	
+			
+	    	<h:form prependId="true">
+	    		
+	    		<f:event listener="#{painel01Controlador.init()}" type="preRenderView"></f:event>
+	    		
+		    	<div class="container-fluid">
+		    	
+		    		<div class="row">
+		    			
+		    			<div class="col-sm-2">
+		    				<div class="ajaxNavBar" style="display: none;">
+			    				<i class="glyphicon glyphicon-refresh"></i>
+			    				<p:spacer width="5px"/>
+			    				Carregando...
+		    				</div>
+		    			</div>
+		    			
+			    		<div class="col-sm-offset-7 col-sm-2 pull-right-">
+			    			<h:panelGroup id="panelGroupSlider" layout="block" styleClass="pull-right">
+					    		<p:inputText id="number" value="#{painel01Controlador.sliderNumber}" styleClass="hidden" />
+						        <h:outputText id="output" value="Segundos: #{painel01Controlador.sliderNumber}" styleClass="outputSliderPainel"/>
+						        <p:slider id="sliderPainel" for="number" display="output" style="width:200px" displayTemplate="Segundos: {value}"
+						        	
+						        	minValue="5" maxValue="120">
+						        	<p:ajax event="slideEnd" 
+						        		listener="#{painel01Controlador.onSlideEnd}"
+						        		oncomplete="location.reload();" 
+						        		process="@all" />
+					        	</p:slider>			    		
+			    			</h:panelGroup>
+							<p:commandButton styleClass="hidden"/>
+			    		</div>		    			
+		    			
+			    		<div class="-col-sm-offset-8 col-sm-1 pull-right-">
+							<button type="button" class="btn btn-info" onclick="gerarMeters()">
+							  <span class="glyphicon glyphicon-refresh"></span>
+							</button>								
+				    		<p:spacer height="40px"/> 
+			    		</div>
+			    		
+		    		</div>
+		    		
+		    		<h:panelGroup id="pollMeters">
+			    		<p:poll 
+			    		widgetVar="pollMeters"
+			    		interval="#{painel01Controlador.sliderNumber}" 
+			    		listener="#{painel01Controlador.gerarMeters()}" 
+			    		autoStart="true"
+			    		update="@([id$=panelGroupRenderMeters])" />
+		    		</h:panelGroup>
+		    		
+		    		<p:remoteCommand 
+			    		name="gerarMeters"
+			    		autoRun="true"
+			    		update="@([id$=panelGroupRenderMeters])" process="@this" 
+			    		action="#{painel01Controlador.gerarMeters()}"/>
+		    		
+	    			<h:panelGroup id="panelGroupRenderMeters" layout="block" styleClass="row">
+			    		<h:panelGroup binding="#{painel01Controlador.panelGroupMeters}"></h:panelGroup>
+	    			</h:panelGroup>
+	    			
+		        </div>	    
+	    	</h:form>
+			
+		</h:body>
+	</f:view>
+</html>

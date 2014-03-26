@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/paginas/templates/principal.xhtml">
+
+	<ui:param name="title" value="Cadastro de Painel" />
+
+	<ui:define name="conteudo">
+		
+      <div class="jumbotron">
+        <h1>Buisiness Inteligente</h1>
+		<blockquote>
+	        <p>A Inteligência Empresarial, ou Business Intelligence, surgiu na década de 80 e descreve as habilidades 
+	        das corporações para aceder a dados e explorar informações e recursos financeiros em proveito dos directores, 
+	        o que lhes permite incrementar e tornar mais pautada em informações a tomada de decisão.</p>
+		  <footer>Wikipedia</footer>
+		</blockquote>
+        <p>
+        <h:form>
+        	<p:commandLink action="metricas" styleClass="btn btn-lg btn-primary" ajax="false">Cadastrar Métrica</p:commandLink>
+        </h:form>
+<!--           <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">Cadastrar Métrica</a> -->
+        </p>
+      </div>		
+		
+	</ui:define>
+
+</ui:composition>

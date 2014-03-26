@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="formulario">
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="span12- cabecalho">
+					<div class="cabecalhoIn">
+						<a href="#{facesContext.externalContext.request.contextPath}"><div class="logoCabecalho"></div></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="navaffix" data-spy="affix" data-offset-top="111">
+			<div class="navbar navbar-fixed">
+				<div class="navbar-inner">
+
+					<div class="container-fluid">
+<!-- 						<a class="btn btn-navbar" data-toggle="collapse" -->
+<!-- 							data-target=".nav-collapse"> <span class="icon-bar"></span> <span -->
+<!-- 							class="icon-bar"></span> <span class="icon-bar"></span> -->
+<!-- 						</a> -->
+						<h:panelGroup id="menu" layout="block" styleClass="nav-collapse- collapse-">
+							<ul class="nav pull-left">
+							
+								<h:panelGroup rendered="#{p:ifGranted('ROLE_CADASTROS_MENU')}">
+								<li class="dropdown">
+									<a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
+										<h:outputText  value="Cadastros" /> <b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+									
+										<h:panelGroup rendered="#{p:ifGranted('ROLE_USUARIOS_CADASTRO')}">
+											<li>
+												<h:commandLink action="#{usuarioControlador.linkUsuario()}">
+													<h:outputText value="Usuarios" />
+												</h:commandLink>
+											</li>
+										</h:panelGroup>
+
+										<h:panelGroup rendered="#{p:ifGranted('ROLE_PAPEIS_CADASTRO')}">
+											<li>
+												<h:commandLink action="#{papelControlador.linkPapel()}">
+													<h:outputText value="#{msg.label_usuario_tittle_papeis}" />
+												</h:commandLink>
+											</li>
+										</h:panelGroup>											
+
+									</ul>
+								</li>
+								</h:panelGroup>								
+								
+							</ul>
+							
+							<ul class="nav pull-right">
+								<h:panelGroup rendered="#{not empty usuario}">
+
+									<li id="ajaxNavBar" style="display: none;">
+										<a href="#">
+											<span class="label label-info">Carregando...</span>
+										</a>
+									</li>
+									
+									<h:panelGroup rendered="#{p:ifGranted('ROLE_ADMIN_LUCENE_INDEXAR')}">
+										<li id="progress-monitor-lucene" style="display:none;">
+											<a href="#">
+												<h:panelGroup id="progressBarMonitorLucene">
+													<h:panelGroup rendered="#{indexingLuceneControlador.ativo}">
+														<p:poll interval="3" update="@([id$=progressBarMonitorLucene])" widgetVar="pollMonitorLucene" process="@this" stop="#{not indexingLuceneControlador.ativo}"/>
+														<h:panelGroup id="panelGroupProgress">
+														    <div class="progress progress-striped active">
+															    <div class="bar" style="width: #{indexingLuceneControlador.progress}%;"></div>
+														    </div>														
+														</h:panelGroup>  
+													</h:panelGroup> 
+												</h:panelGroup>
+											</a>
+										</li>
+									</h:panelGroup>									
+
+									<li><a title="" class="popover-erros"
+										data-placement="bottom" data-toggle="popover" href="#"
+										data-original-title="Erros encontrados"> </a></li>
+
+									<li class="dropdown"><a data-toggle="dropdown"
+										class="dropdown-toggle" href="#"><h:outputText
+												value="#{minhaContaControlador.getUsuarioLogado().nome} " /><b
+											class="caret"></b></a>
+										<ul class="dropdown-menu">
+										
+											<h:panelGroup rendered="#{p:ifGranted('ROLE_ADMIN_LOGS')}">						
+												<li>
+													<h:commandLink action="#{tailFilesControlador.linkTailFiles()}" target="_blank">
+														<i class="icon-file-alt"></i>
+														<p:spacer width="5px;" />
+														<h:outputText value="Logs" />													
+													</h:commandLink>
+												</li>
+											</h:panelGroup>
+											
+											<h:panelGroup rendered="#{p:ifGranted('ROLE_ADMIN_LUCENE_INDEXAR')}">										
+												<li>
+													<p:commandLink action="#{indexingLuceneControlador.indexarLucene()}">
+														<i class="icon-cogs"></i>
+														<p:spacer width="5px;" />
+														<h:outputText value="Reindexar Lucene" />													
+													</p:commandLink>
+												</li>
+											</h:panelGroup>
+											
+											<h:panelGroup rendered="#{consoleControlador.exibirConsole()}">						
+												<li>
+													<h:outputLink value="#{facesContext.externalContext.request.contextPath}/console">
+															<i class="icon-wrench"></i>
+															<p:spacer width="5px;" />
+															<h:outputText value="Console" />													
+													</h:outputLink>
+												</li>	
+											</h:panelGroup>											
+											
+											<li>
+												<h:commandLink
+													action="#{minhaContaControlador.minhaContaInicio()}">
+													<i class="icon-user"></i>
+													<p:spacer width="5px;" />
+													<h:outputText value="Minha Conta" />
+												</h:commandLink>
+											</li>
+											<li><a
+												href="#{request.contextPath}/j_spring_security_logout"><i
+													class="icon-off"></i> Sair</a></li>
+										</ul></li>
+
+								</h:panelGroup>
+							</ul>
+						</h:panelGroup>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</h:form>
+</ui:composition>

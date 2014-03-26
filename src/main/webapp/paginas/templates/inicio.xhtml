@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<f:view contentType="text/html">
+	    <h:head>
+		
+			<f:facet name="first">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+				<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+				<meta content='text/html; charset=UTF-8' http-equiv="Content-Type" />
+				<title>#{propertiesControlador.sistemaTituloGeral} - <ui:insert name="title"/></title>
+				<link rel="icon" href="#{facesContext.externalContext.request.contextPath}/recursos/imagens/favicon.ico" />
+			</f:facet>	        
+			
+			<!-- Custom BootStrap -->
+			<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/estilos/bootstrap.css"/>
+<!-- 			<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/estilos/bootstrap-responsive.css"/> -->
+	        <link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/estilos/custom_bootstrap.css"/>
+	        
+	        <!-- Custom Fontawesome -->
+	        <link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/font-awesome-more/css/font-awesome-social.css"/>
+	        <link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/font-awesome-more/css/font-awesome-corp.css"/>
+	        <link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/recursos/font-awesome-more/css/font-awesome-ext.css"/>
+	        
+			<!-- O carregamento desses scripts deve acontecer depois do carregamento dos JS do primeface -->
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/scripts/hashmap.js"></script>
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/scripts/jquery.maskmoney.js" type="text/javascript"></script>
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/scripts/application.js" type="text/javascript"></script>
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/scripts/bootstrap.min.js" type="text/javascript"></script>
+			<script src="#{facesContext.externalContext.request.contextPath}/recursos/scripts//airbrake.js" type="text/javascript"></script>
+			
+			<script type="text/javascript">
+			
+				window.Airbrake.setHost('#{propertiesControlador.airbrakeApiHost}');
+				window.Airbrake.setEnvironment('#{propertiesControlador.env}');
+				window.Airbrake.setKey('#{propertiesControlador.airbrakeApiKey}');
+
+	        	try{
+			        function handleCompleteStatus(xhr, status, args){
+			        	if(!args.validationFailed){
+			        		jQuery(".alert-status").addClass(args.statusAlerta);
+			        		jQuery(".alert-status span").html(args.statusMsg);
+			        		jQuery(".alert-status").show(); 
+				        }
+				    }
+					jQuery(document).ready(function(){
+						jQuery('#form\\:login').blur(function(){
+							jQuery(this).val(jQuery(this).val().toLowerCase());
+						})
+						jQuery('.setarFoco').focus();
+						jQuery('[rel$="tooltip"]').tooltip();
+					}); 
+		        }catch(e){
+			        console.log(e);
+			    }				
+				
+			</script>       
+	        
+			<style type="text/css">
+			
+		      html, body {
+				background: url("#{facesContext.externalContext.request.contextPath}/recursos/img/bg_all.jpg") repeat !important;
+		      }
+		 
+		      /* The white background content wrapper */
+		      .container-login{
+		      	background: #fff;
+		        -webkit-border-radius: 10px 10px 10px 10px;
+		           -moz-border-radius: 10px 10px 10px 10px;
+		                border-radius: 10px 10px 10px 10px;
+		        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+		           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+		                box-shadow: 0 1px 2px rgba(0,0,0,.15);
+		      }
+		      .content {
+		      	border-top:1px solid #ccc;
+		      	padding-top:10px;
+		        width: 800px;
+		        margin:0 auto;
+		      }
+		      .logoLogin{
+				text-align: center;
+				padding: 20px;
+		      }
+		 
+		      legend {
+		        margin-right: -50px;
+		        font-weight: bold;
+		        color: #404040;
+		      }		
+		      .versao{
+    			margin-top: 9px;		      
+		      }
+		      .inputLogin{
+		      	width: 235px;
+		      }
+		      input{
+		      	height: 28px !important;
+		      }
+			</style>	        
+	        
+	    </h:head>
+	    
+	    <h:body>
+	    
+	    	<!-- Importando as constantes do sistema -->
+	    	<pe:importConstants className="br.com.neus.kernel.util.Constantes" var="Constantes" />
+	    	<f:loadBundle basename="META-INF/mensagens" var="msg"/>	 
+	    	
+			<div class="container container-login">
+				
+				<div class="logoLogin"><p:graphicImage value="/recursos/img/logo_login.png" /> </div>
+				
+	            <div class="row">
+					<div class="offset3 span6">
+					
+		            	<h:panelGroup rendered="#{not empty param['disable']}">
+						    <div class="alert alert-error">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Erro! </strong> Verifique os dados digitados e tente novamente.
+						    </div>			            
+		            	</h:panelGroup>
+					
+		            	<h:panelGroup rendered="#{not empty param['locked']}">
+						    <div class="alert alert-error">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Erro! </strong> Usuário bloqueado. Favor entrar em contato com o administrador
+						    </div>			            
+		            	</h:panelGroup>
+		            	<h:panelGroup rendered="#{not empty param['senha_alterada']}">
+						    <div class="alert alert-info">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Sucesso! </strong> Seu senha foi alterada com sucesso. Favor efetuar login!
+						    </div>			            
+		            	</h:panelGroup>
+		            	<h:panelGroup rendered="#{not empty param['resetar_senha_sucesso']}">
+						    <div class="alert alert-info">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Sucesso!</strong> Sua nova senha foi enviada para seu email. Favor verificar!
+						    </div>			            
+		            	</h:panelGroup>
+		            	<h:panelGroup rendered="#{not empty param['resetar_senha_dados_invalidos']}">
+						    <div class="alert alert-info">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Atenção! </strong> Os dados estão inválidos. Favor entrar em contato com Administrador.
+						    </div>			            
+		            	</h:panelGroup>
+		            	<h:panelGroup rendered="#{not empty param['resetar_senha_erro']}">
+						    <div class="alert alert-error">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Erro! </strong> Ocorreu um erro ao tentar resetar sua senha.
+						    </div>			            
+		            	</h:panelGroup>
+		            	<h:panelGroup rendered="#{not empty param['login_error']}">
+						    <div class="alert alert-error">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Erro! </strong> Verifique os dados digitados e tente novamente.
+						    </div>			            
+		            	</h:panelGroup>
+		            	<h:panelGroup rendered="#{not empty param['sessao_expirada']}">
+						    <div class="alert alert-error">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Sessão Expirada! </strong> Sua sessão expirou, realize login novamente.
+						    </div>			            
+		            	</h:panelGroup>
+		            	<h:panelGroup rendered="#{not empty param['authentication-error']}">
+						    <div class="alert alert-error">
+							    <a class="close" data-dismiss="alert">×</a>
+							    <strong>Erro! </strong> Ocorreu algum erro ao autenticar ou você excedeu o máximo de sessões abertas.
+						    </div>			            
+		            	</h:panelGroup>				            	
+				            	
+					    <div class="alert-status alert" style="display:none">
+						    <a class="close" data-dismiss="alert">×</a>
+						    <span></span>
+					    </div>	
+					    
+						<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>  	
+						
+					</div>
+				</div>				
+				
+				<ui:insert name="conteudo"/>
+				
+		    </div>        
+		    
+			<div class="container">
+			    <ul class="inline text-right versao">
+				    <h:panelGroup  rendered="#{not coreControlador.producao}">
+					    <li><h:outputLabel value="Revision: #{geralControlador.revision}" style="text-align : right; color:#B94A48 !important;" styleClass="muted"/></li>
+				    </h:panelGroup>
+				    <li><h:outputLabel value="Versão: #{geralControlador.versaoApp}" style="text-align : right; color:#B94A48 !important;" styleClass="muted"/></li>
+			    </ul>		    
+			</div>
+		    <div id="versao">
+		    	
+		    	
+		    </div>
+		    
+		    
+	    </h:body>
+	    
+	</f:view>
+</html>

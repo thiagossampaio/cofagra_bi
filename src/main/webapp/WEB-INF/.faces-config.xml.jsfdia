@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="painel_i::#paginas#paineis#painel_i.xhtml"
+    NAME="output" PATH="/paginas/paineis/painel_i.xhtml"
+    TARGET="rules:#paginas#paineis#painel_i.xhtml" TITLE="painel_i" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="inicio::#paginas#index.xhtml" NAME="output"
+    PATH="/paginas/index.xhtml" TARGET="rules:#paginas#index.xhtml"
+    TITLE="inicio" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#paginas#index.xhtml"
+  PATH="/paginas/index.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,241,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="metricas::#paginas#paineis#metricas.xhtml"
+    NAME="output" PATH="/paginas/paineis/metricas.xhtml"
+    TARGET="rules:#paginas#paineis#metricas.xhtml" TITLE="metricas" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#paginas#paineis#painel_i.xhtml"
+  PATH="/paginas/paineis/painel_i.xhtml" SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#paginas#paineis#metricas.xhtml"
+  PATH="/paginas/paineis/metricas.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

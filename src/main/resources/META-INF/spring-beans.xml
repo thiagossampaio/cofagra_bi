@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<aop:aspectj-autoproxy />
+	<context:annotation-config />
+	<context:property-placeholder location="classpath:META-INF/core.properties, classpath:META-INF/mensagens.properties" />
+	<context:component-scan base-package="br.com.cofagra" />
+	
+		<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
+	
+		<!-- Pós-processador de anotações JPA -->
+		<bean
+			class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+		<!-- Tradutor de exceções JPA -->
+		<bean
+			class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	
+		<!-- Configuração da unidade de persistência -->
+		<bean id="entityManagerFactory"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="persistenceUnitName" value="persistence_unit_erp" />
+		</bean>
+	
+		<!-- Hibernate Session Factory -->
+		<bean id="sessionFactory" factory-bean="entityManagerFactory" factory-method="getSessionFactory" />
+	
+		<!-- DEFINIÇÃO DOS DAOS DA APLICAÇÃO -->
+		<bean id="daoMetrica" class="br.com.cofagra.bi.dao.GenericDaoJpa">
+			<constructor-arg value="br.com.cofagra.bi.entidades.Metrica" />
+		</bean>
+		<!-- /DEFINIÇÃO DOS DAOS DA APLICAÇÃO -->
+	
+		<bean id="taskExecutor"
+			class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+			<property name="corePoolSize" value="5" />
+			<property name="maxPoolSize" value="10" />
+			<property name="WaitForTasksToCompleteOnShutdown" value="true" />
+		</bean>
+	
+		<!-- Configurando o envio de email Simples -->
+		<bean id="mailSender" autowire="byName" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="host">
+				<value>mail.cofagra.com.br</value>
+			</property>
+			<property name="port">
+				<value>25</value>
+			</property>
+		</bean>
+	
+		<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+			<property name="from" value="adquirencia@neus.com.br" />
+			<property name="subject" value="Testando o envio usando o Gmail" />
+		</bean>
+		<!-- Configurando o envio de email Simples -->
+	
+		<!-- Aspecto para as transações -->
+		<tx:annotation-driven transaction-manager="txManager" />
+		<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+			<property name="entityManagerFactory" ref="entityManagerFactory" />
+		</bean>
+		<!-- Aspecto para as transações -->
+	
+</beans>
