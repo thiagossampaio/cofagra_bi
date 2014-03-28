@@ -104,7 +104,7 @@ public class Painel01Controlador implements Serializable{
                               m.setStyleClass(metrica.getStyleClass());
                          }
 
-                         m.setShowTickLabels(metrica.getShowTickLabels());
+                         m.setShowTickLabels(metrica.isShowTickLabels());
 
                          if (Objeto.notBlank(metrica.getTitulo())) {
                               m.setTitle(metrica.getTitulo());

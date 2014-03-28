@@ -284,6 +284,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- ORACLE database driver -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0</version>
+		</dependency>		
 	</dependencies>
 
 	<build>
@@ -335,7 +342,7 @@
 				<version>1.1</version>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>java</goal>
 						</goals>
@@ -345,7 +352,7 @@
 					<mainClass>br.com.cofagra.bi.util.JpaSchemaExport</mainClass>
 					<arguments>
 						<argument>persistence_unit_erp</argument>
-						<argument>${basedir}/config/schema.sql</argument>
+						<argument>${project.build.directory}/classes/META-INF/schema.sql</argument>
 						<argument>true</argument>
 						<argument>true</argument>
 					</arguments>

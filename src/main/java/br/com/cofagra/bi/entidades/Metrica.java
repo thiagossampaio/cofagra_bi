@@ -4,8 +4,6 @@ package br.com.cofagra.bi.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,13 +24,13 @@ import lombok.Setter;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
 import org.primefaces.model.chart.MeterGaugeChartModel;
 
-import com.google.common.base.Splitter;
-
 import br.com.cofagra.bi.util.Constantes;
-import br.com.twsoftware.alfred.colecoes.Colecoes;
 import br.com.twsoftware.alfred.object.Objeto;
+
+import com.google.common.base.Splitter;
 
 @Entity
 @Table(name = "T_METRICAS")
@@ -60,58 +58,73 @@ public class Metrica implements GenericEntity<Integer>, Serializable{
 
      @Getter
      @Setter
+     @Column(name = "TITULO")
      private String titulo;
 
      @Getter
      @Setter
+     @Column(name = "QUERY")
      private String query;
 
      @Getter
      @Setter
+     @Column(name = "PAINEL")
      private String painel;
 
      @Getter
      @Setter
+     @Column(name = "TIPO")
      private String tipo;
 
      @Getter
      @Setter
+     @Column(name = "ESTAGIOS")
      private String estagios;
 
      @Getter
      @Setter
+     @Column(name = "CORES")
      private String cores;
 
      @Getter
      @Setter
+     @Column(name = "LABEL")
      private String label;
 
      @Getter
      @Setter
+     @Column(name = "STYLE")
      private String style;
 
      @Getter
      @Setter
+     @Column(name = "STYLECLASS")
      private String styleClass;
 
      @Getter
      @Setter
-     private Boolean showTickLabels;
+     @Type(type="yes_no")     
+     @Column(name = "SHOWTICKLABELS", length = 1)
+     private boolean showTickLabels;
 
      @Getter
      @Setter
+     @Column(name = "LABELHEIGHTADJUST")
      private Integer labelHeightAdjust;
 
      @Getter
      @Setter
+     @Column(name = "INTERVALOUTERRADIUS")
      private Integer intervalOuterRadius;
 
      @Getter
      @Setter
+     @Column(name = "MIN")
      private Double min;
 
      @Getter
      @Setter
+     @Column(name = "MAX")
      private Double max;
 
      @Transient
@@ -130,18 +143,6 @@ public class Metrica implements GenericEntity<Integer>, Serializable{
                     for (String e : estagios) {
                          intervals.add(new BigDecimal(e));
                     }
-//                    if(Objeto.notBlank(intervals) && !intervals.contains(new BigDecimal(result.toString()))){
-//                         intervals.add(new BigDecimal(result.toString()));
-//                    }
-//                    
-//                    Collections.sort(intervals, new Comparator<Number>(){
-//
-//                         @Override
-//                         public int compare(Number o1, Number o2) {
-//                              return new BigDecimal(o1.toString()).compareTo(new BigDecimal(o2.toString()));
-//                         }
-//                         
-//                    });
                     return new MeterGaugeChartModel(result, intervals);
                }
           }
